@@ -2,7 +2,7 @@
  import { SERVER_URL } from "./serverURL";
 
  //upload new video
-export const uploadNewVideoAPI = async ()=>{
+export const uploadNewVideoAPI = async (video)=>{
     return await commonAPI("POST",`${SERVER_URL}/allVideos`,video)
 }
 
@@ -14,7 +14,7 @@ export const getAllVideosAPI = async ()=>{
 
 //view single video
 
-export const getAllVideoAPI = async (id)=>{
+export const getAVideoAPI = async (id)=>{
     return await commonAPI("GET",`${SERVER_URL}/allVideos/${id}`,"")
 }
 

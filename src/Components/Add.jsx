@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { Button, Modal, Form ,FloatingLabel } from 'react-bootstrap'
+import {uploadNewVideoAPI} from '../services/allAPI';
 
 function Add() {
   const [uploadVideo,setUploadVideo] = useState({
@@ -15,6 +16,7 @@ console.log(uploadVideo);
     // v= shesham ulla 11 digits
     // athin split cheyithal we get the link in seperate  like https://www.youtube.com/watch? and Po3jStA673E&t=1s and we want only 11 digits so slice use akki split akkiya rand index ittea 1 index eduth 0,11 digits edukum
 
+
       
   const getYoutubeEmbedLink = (e)=>{
     const {value} = e.target
@@ -26,6 +28,28 @@ console.log(uploadVideo);
       setUploadVideo({...uploadVideo,link:""})
     }
   }
+
+const handleUpload = async ()=>{
+  const {id,caption,url,link} = uploadVideo
+  if(!id || !caption || !url || !link){
+    alert("Uploaded form is incomplete. Please fill the form completely")
+  }else{
+    // store uploadVideo in json server
+    const result = await uploadNewVideoAPI(uploadVideo)
+    console.log(result);
+    if(result.status>=200 && result.status<300){
+      // success
+      handleClose()
+      // reset uploadVideo
+      setUploadVideo({
+        id:"",caption:"",url:"",link:""
+      })
+    }else{
+      alert(result.message)
+    }
+  }
+}
+
   return (
    <>
   <div className="d-flex align-items-center">
@@ -78,7 +102,7 @@ console.log(uploadVideo);
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button className="btn btn-info">Upload</Button>
+          <Button onClick={handleUpload} className="btn btn-info">Upload</Button>
         </Modal.Footer>
       </Modal>
    </>
