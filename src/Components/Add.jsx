@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { Button, Modal, Form ,FloatingLabel } from 'react-bootstrap'
 import {uploadNewVideoAPI} from '../services/allAPI';
 
-function Add() {
+function Add({setUploadVideoResponse}) {
   const [uploadVideo,setUploadVideo] = useState({
     id:"",caption:"",url:"",link:""
   })
@@ -44,6 +44,8 @@ const handleUpload = async ()=>{
       setUploadVideo({
         id:"",caption:"",url:"",link:""
       })
+      // share result.data to view component
+      setUploadVideoResponse(result.data)
     }else{
       alert(result.message)
     }
